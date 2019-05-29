@@ -1,0 +1,1 @@
+export { TextElementComponent as text } from './text-element.component';

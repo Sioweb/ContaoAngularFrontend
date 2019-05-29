@@ -1,0 +1,9 @@
+
+<picture *ngIf="data.sources.length">
+  <!--[if IE 9]><video style="display: none;"><![endif]-->
+  <source *ngFor="let source of data.sources" [attr.srcset]="source.srcset" [attr.sizes]="source.sizes" [attr.media]="source.media">
+  <!--[if IE 9]></video><![endif]-->
+  <img [src]="data.img.src" [attr.srcset]="data.srcset" [attr.sizes]="data.img.sizes" itemprop="image">
+
+</picture>
+<img *ngIf="!data.sources.length" [src]="data.img.src" [attr.srcset]="data.srcset" [attr.sizes]="data.img.sizes" itemprop="image">

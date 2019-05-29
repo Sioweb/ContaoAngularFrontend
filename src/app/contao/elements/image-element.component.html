@@ -1,0 +1,7 @@
+<figure class="image_container{{data.floatClass}}" >
+    <a *ngIf="data.href" href="{{data.href}}" title="{{data.linkTitle}}"{{data.attributes}}>
+      <app-picture-element [data]="data"></app-picture-element>
+    </a>
+    <app-picture-element *ngIf="!data.href" [data]="data.picture"></app-picture-element>
+    <figcaption *ngIf="data.caption" class="caption">{{data.caption}}</figcaption>
+</figure>

@@ -1,0 +1,10 @@
+<nav class="{{data.class}} block" [id]="data.cssID" [style]="data.style" itemscope itemtype="http://schema.org/SiteNavigationElement">
+
+  <a href="{{data.request}}{{data.skipId}}" class="invisible">{{data.skipNavigation}}</a>
+
+  <div #headline></div>
+  <div #items></div>
+  
+  <a id="{{data.skipId}}" class="invisible">&nbsp;</a>
+
+</nav>

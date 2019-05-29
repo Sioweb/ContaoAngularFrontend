@@ -1,0 +1,1 @@
+export { NavigationModuleComponent as navigation } from './navigation-module.component';
