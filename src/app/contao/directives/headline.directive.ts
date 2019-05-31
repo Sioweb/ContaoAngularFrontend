@@ -9,7 +9,6 @@ export class HeadlineDirective {
 
   constructor(elr:ElementRef) {    
     var myAnchor = elr.nativeElement;
-    console.log(myAnchor);
     var mySpan = document.createElement("h1");
     mySpan.innerHTML = "replaced anchor!";
     myAnchor.parentNode.replaceChild(mySpan, myAnchor);

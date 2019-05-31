@@ -1,40 +1,32 @@
 import * as ModuleComponents from './../../modules/ModuleMapper';
 import { ModuleModel } from './../../models/ModuleModel';
-import { Component, Input, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, Input, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 
 @Component({
-  selector: 'app-content-module',
-  templateUrl: './content-module.component.html'
+  selector: '[app-content-module]',
+  template: ``
 })
-export class ContentModuleComponent implements OnInit {
+export class ContentModuleComponent {
 
-  contentElement: ModuleModel = new ModuleModel;
-
-  @ViewChild('dynamicElement', {read: ViewContainerRef})
-  dynamicElement: ViewContainerRef;
+  contentModule: ModuleModel = new ModuleModel;
 
   constructor(
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
+    private viewContainerRef: ViewContainerRef
   ) { }
 
-  @Input() set inputContentElement(contentElement) {
-    this.contentElement = contentElement;
+  @Input() set inputContentElement(contentModule) {
+    this.contentModule = contentModule;
 
-    console.log(this.contentElement);
-
-    if(ModuleComponents[this.contentElement.type] === undefined) {
-      this.contentElement.type = 'text';
+    if(ModuleComponents[this.contentModule.type] === undefined) {
+      this.contentModule.type = 'text';
     }
 
-    if(!this.contentElement.invisible) {
-      let componentFactory = this.resolver.resolveComponentFactory(ModuleComponents[this.contentElement.type]);
-      this.dynamicElement.clear();
-      let cretedFactory = this.dynamicElement.createComponent(componentFactory);
-      (<{data: ModuleModel}>cretedFactory.instance).data = this.contentElement;
+    if(!this.contentModule.invisible) {
+      let componentFactory = this.resolver.resolveComponentFactory(ModuleComponents[this.contentModule.type]);
+      let componentRef = this.viewContainerRef.createComponent(componentFactory);
+      
+      (<{data: ModuleModel}>componentRef.instance).data = this.contentModule;
     }
   }
-
-  ngOnInit() {
-  }
-
 }

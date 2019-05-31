@@ -1,20 +1,18 @@
 import * as ElementComponents from './../../elements/ElementMapper';
 import { ContentElement } from './../../models/ContentElement';
-import { Component, Input, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, Input, ViewContainerRef, ComponentFactoryResolver, ElementRef, EmbeddedViewRef } from '@angular/core';
 
 @Component({
-  selector: 'app-content-element',
-  templateUrl: './content-element.component.html'
+  selector: '[app-content-element]',
+  template: ``
 })
-export class ContentElementComponent implements OnInit {
+export class ContentElementComponent {
 
   contentElement: ContentElement = new ContentElement;
 
-  @ViewChild('dynamicElement', {read: ViewContainerRef})
-  dynamicElement: ViewContainerRef;
-
   constructor(
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
+    private viewContainerRef: ViewContainerRef
   ) { }
 
   @Input() set inputContentElement(contentElement) {
@@ -26,13 +24,9 @@ export class ContentElementComponent implements OnInit {
 
     if(!this.contentElement.invisible) {
       let componentFactory = this.resolver.resolveComponentFactory(ElementComponents[this.contentElement.type]);
-      this.dynamicElement.clear();
-      let cretedFactory = this.dynamicElement.createComponent(componentFactory);
-      (<{data: ContentElement}>cretedFactory.instance).data = this.contentElement;
+      let componentRef = this.viewContainerRef.createComponent(componentFactory);
+      
+      (<{data: ContentElement}>componentRef.instance).data = this.contentElement;
     }
   }
-
-  ngOnInit() {
-  }
-
 }

@@ -8,7 +8,6 @@ import { ElementImage } from './ElementImage';
 export class ImageElementComponent extends ElementImage implements OnInit {
 
   ngOnInit() {
-    console.log('Image', this.data);
   }
 
 }
