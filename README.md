@@ -1,27 +1,44 @@
-# Angular
+# Angular im Contao Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+Dies ist ein einfacher Prototyp wie ich mir Angular & Contao vorstelle. Alle Module & Templates müssten natürlich ausgetauscht werden. Dieses Modul benötigt aktuell zwingend [diese Version](https://github.com/Sioweb/contao-content-api-bundle) der [Die Schittigs-Api](https://github.com/DieSchittigs/contao-content-api-bundle).
 
-## Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Konsole im Root von Contao öffnen: `git clone https://github.com/Sioweb/ContaoAngularFrontend angular` 
 
-## Code scaffolding
+## FE_PAGE
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Ein Template `fe_angular.html5` anlegen und folgendes hinterlegen:
 
-## Build
+```php
+<!doctype html>
+<html lang="<?= $this->language ?>"<?php if ($this->isRTL): ?> dir="rtl"<?php endif; ?>>
+<head>
+  <?php $this->block('head'); ?>
+    <meta charset="<?= $this->charset ?>">
+    <title><?= $this->title ?></title>
+    <base href="<?= $this->base ?>">
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+    <?php $this->block('meta'); ?>
+      <meta name="robots" content="<?= $this->robots ?>">
+      <meta name="description" content="<?= $this->description ?>">
+      <meta name="generator" content="Contao Open Source CMS">
+    <?php $this->endblock(); ?>
 
-## Running unit tests
+    <?= $this->viewport ?>
+    <?= $this->framework ?>
+    <?= $this->stylesheets ?>
+    <?= $this->mooScripts ?>
+    <?= $this->head ?>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+    <?php $this->block('html5shiv'); ?>
+      <!--[if lt IE 9]><script src="<?= $this->asset('js/html5shiv-printshiv.min.js', 'contao-components/html5shiv') ?>"></script><![endif]-->
+    <?php $this->endblock(); ?>
+  <?php $this->endblock(); ?>
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+</head>
+<body id="top" class="{{ua::class}}<?php if ($this->class) echo ' ' . $this->class; ?>"<?php if ($this->onload): ?> onload="<?= $this->onload ?>"<?php endif; ?> itemscope itemtype="http://schema.org/WebPage">
+  <app-root></app-root>
+  <script type="text/javascript" src="runtime.js"></script><script type="text/javascript" src="es2015-polyfills.js" nomodule></script><script type="text/javascript" src="polyfills.js"></script><script type="text/javascript" src="styles.js"></script><script type="text/javascript" src="vendor.js"></script><script type="text/javascript" src="main.js"></script></body>
+</html>
+```
