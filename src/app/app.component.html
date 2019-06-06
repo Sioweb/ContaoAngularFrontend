@@ -1,3 +1,7 @@
 <div id="wrapper">
-    <app-article *ngFor="let section of page.articles | keyvalue" [inputArticles]="section"></app-article>
+    <header *ngIf="page.articles.header !== undefined && page.articles.header.length" app-article [inputArticles]="page.articles.header"></header>
+    <aside *ngIf="page.articles.left !== undefined && page.articles.left.length" id="left" app-article [inputArticles]="page.articles.left"></aside>
+    <main *ngIf="page.articles.main !== undefined && page.articles.main.length" app-article [inputArticles]="page.articles.main"></main>
+    <aside *ngIf="page.articles.right !== undefined && page.articles.right.length" id="right" app-article [inputArticles]="page.articles.right"></aside>
+    <footer *ngIf="page.articles.footer !== undefined && page.articles.footer.length" app-article [inputArticles]="page.articles.footer"></footer>
 </div>

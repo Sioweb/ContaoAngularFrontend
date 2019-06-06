@@ -20,10 +20,8 @@ export class NavigationModuleComponent extends Module implements OnInit {
 
     const itemsRef = this.itemsRef.nativeElement;
     const items = document.createElement('div');
+
     items.innerHTML = this.data.items.trim();
     itemsRef.parentNode.replaceChild(items.firstChild, itemsRef);
   }
-  
-
-  
 }

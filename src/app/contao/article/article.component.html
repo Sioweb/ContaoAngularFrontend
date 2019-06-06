@@ -1,8 +1,6 @@
-<ng-container *ngFor="let article of articles">
-  <ng-container *ngIf="article.published && article.modulType === 'article'">
-    <ng-container app-content-element *ngFor="let contentElement of article.content" [inputContentElement]="contentElement"></ng-container>
-  </ng-container>
-  <ng-container *ngIf="!article.invisible && article.modulType === 'module'">
-      <ng-container app-content-module [inputContentElement]="article"></ng-container>
-  </ng-container>
-</ng-container>
+<div *ngFor="let article of articles" class="inner container">
+    <app-content-module *ngIf="article.moduleType === 'module'" [inputContentElement]="article"></app-content-module>
+    <ng-container *ngIf="article.moduleType === 'article'">
+        <div *ngFor="let contentElement of article.elements | keyvalue" app-content-element app-content-element [inputContentElement]="contentElement"></div>
+    </ng-container>
+</div>

@@ -1,0 +1,3 @@
+<ng-container *ngFor="let seperator of data.elements">
+    <div *ngFor="let contentElement of seperator | keyvalue" app-content-element [inputContentElement]="contentElement"></div>
+</ng-container>

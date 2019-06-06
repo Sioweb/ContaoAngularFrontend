@@ -1,10 +1,10 @@
 import * as ElementComponents from './../../elements/ElementMapper';
 import { ContentElement } from './../../models/ContentElement';
-import { Component, Input, ViewContainerRef, ComponentFactoryResolver, ElementRef, EmbeddedViewRef } from '@angular/core';
+import { Component, Input, ViewContainerRef, ComponentFactoryResolver, ElementRef, EmbeddedViewRef, Renderer2, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: '[app-content-element]',
-  template: ``
+  template: `<ng-content></ng-content>`
 })
 export class ContentElementComponent {
 
@@ -12,21 +12,62 @@ export class ContentElementComponent {
 
   constructor(
     private resolver: ComponentFactoryResolver,
-    private viewContainerRef: ViewContainerRef
+    private renderer2: Renderer2,
+    private viewContainerRef: ViewContainerRef,
+    private host: ElementRef
   ) { }
 
   @Input() set inputContentElement(contentElement) {
-    this.contentElement = contentElement;
-
-    if(ElementComponents[this.contentElement.type] === undefined) {
-      this.contentElement.type = 'text';
+    this.contentElement = contentElement.value;
+    
+    if(this.contentElement['length'] !== undefined) {
+      return;
     }
 
-    if(!this.contentElement.invisible) {
-      let componentFactory = this.resolver.resolveComponentFactory(ElementComponents[this.contentElement.type]);
+    if(this.contentElement.elements !== undefined && this.contentElement.elements.length) {
+      let componentFactory = this.resolver.resolveComponentFactory(ElementComponents['wrapper']);
       let componentRef = this.viewContainerRef.createComponent(componentFactory);
       
       (<{data: ContentElement}>componentRef.instance).data = this.contentElement;
+      let elementAttributes = {'class': 'class', 'id': 'cssID', 'style': 'style'};
+
+      for(let attr in elementAttributes) {
+        if(this.contentElement[elementAttributes[attr]] !== undefined && this.contentElement[elementAttributes[attr]] != null) {
+          this.renderer2.setAttribute(componentRef.location.nativeElement, attr, this.contentElement[elementAttributes[attr]]);
+        }
+      }
+      return;
+    }
+
+    let Type = this.contentElement.type;
+    if((Type === undefined || !Type) && this.contentElement.originalElement !== undefined && this.contentElement.originalElement.type !== undefined) {
+      Type = this.contentElement.originalElement.type;
+    }
+    if(ElementComponents[Type] === undefined) {
+      Type = 'html';
+    }
+
+    if(!this.contentElement.invisible) {
+      
+      let componentFactory = this.resolver.resolveComponentFactory(ElementComponents[Type]);
+      let componentRef = this.viewContainerRef.createComponent(componentFactory);
+
+      this.host.nativeElement.parentNode.removeChild(this.host.nativeElement);
+
+      if(Type === 'html') {
+        componentRef.location.nativeElement.innerHTML = this.contentElement.parsedContent.trim();
+        
+      //   // componentRef.location.nativeElement.parentNode.replaceChild(componentRef.location.nativeElement.firstChild, componentRef.location.nativeElement);
+        return;
+      }
+      (<{data: ContentElement}>componentRef.instance).data = this.contentElement;
+      let elementAttributes = {'class': 'class', 'id': 'cssID', 'style': 'style'};
+
+      for(let attr in elementAttributes) {
+        if(this.contentElement[elementAttributes[attr]] !== undefined && this.contentElement[elementAttributes[attr]] != null) {
+          this.renderer2.setAttribute(componentRef.location.nativeElement, attr, this.contentElement[elementAttributes[attr]]);
+        }
+      }
     }
   }
 }

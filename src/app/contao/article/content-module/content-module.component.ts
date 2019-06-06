@@ -3,7 +3,7 @@ import { ModuleModel } from './../../models/ModuleModel';
 import { Component, Input, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 
 @Component({
-  selector: '[app-content-module]',
+  selector: 'app-content-module',
   template: ``
 })
 export class ContentModuleComponent {

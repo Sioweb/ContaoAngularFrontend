@@ -1,3 +1,3 @@
 <div *ngIf="!data.addBefore" [innerHTML]="data.text"></div>
-<app-image-element *ngIf="data.addImage" [data]="data.singleSRC"></app-image-element>
+<app-image-element *ngIf="data.addImage && data.singleSRC !== null" [data]="data.singleSRC"></app-image-element>
 <div *ngIf="data.addBefore" [innerHTML]="data.text"></div>

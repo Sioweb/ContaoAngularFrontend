@@ -11,6 +11,9 @@ import { PictureElementComponent } from './contao/elements/picture-element.compo
 import { NavigationModuleComponent } from './contao/modules/navigation-module.component';
 import { ContentModuleComponent } from './contao/article/content-module/content-module.component';
 import { HeadlineDirective } from './contao/directives/headline.directive';
+import { HtmlElementComponent } from './contao/elements/html-element.component';
+import { WrapperElementComponent } from './contao/elements/wrapper-element.component';
+import { FormElementComponent } from './contao/elements/form-element.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { HeadlineDirective } from './contao/directives/headline.directive';
     PictureElementComponent,
     NavigationModuleComponent,
     ContentModuleComponent,
-    HeadlineDirective
+    HeadlineDirective,
+    HtmlElementComponent,
+    WrapperElementComponent,
+    FormElementComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +37,9 @@ import { HeadlineDirective } from './contao/directives/headline.directive';
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
+    WrapperElementComponent,
+    FormElementComponent,
+    HtmlElementComponent,
     TextElementComponent,
     ImageElementComponent,
     PictureElementComponent,
