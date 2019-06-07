@@ -51,8 +51,6 @@ export class ContentElementComponent {
       Type = 'html';
     }
 
-    console.log(Type);
-
     if(!this.contentElement.invisible) {
       
       let componentFactory = this.resolver.resolveComponentFactory(ElementComponents[Type]);
