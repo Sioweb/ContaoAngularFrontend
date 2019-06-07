@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { Element } from './Element';
 
 @Component({
@@ -7,11 +7,14 @@ import { Element } from './Element';
 })
 export class FormElementComponent extends Element implements OnInit {
 
-  @Input() set inputContentElement(contentElement) {
+  constructor(
+    private host: ElementRef
+  ) {
+    super();
   }
-  
   ngOnInit() {
-    // console.log('FORM', this.data);
+
+    this.host.nativeElement.innerHTML = this.data['fields'];
   }
 
 }

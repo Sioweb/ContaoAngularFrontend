@@ -37,6 +37,8 @@ import { FormElementComponent } from './contao/elements/form-element.component';
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
+    ContentElementComponent,
+    
     WrapperElementComponent,
     FormElementComponent,
     HtmlElementComponent,

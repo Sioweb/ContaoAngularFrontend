@@ -18,7 +18,11 @@ export class ContentElementComponent {
   ) { }
 
   @Input() set inputContentElement(contentElement) {
-    this.contentElement = contentElement.value;
+    if(contentElement.value === undefined) {
+      this.contentElement = contentElement;
+    } else {
+      this.contentElement = contentElement.value;
+    }
     
     if(this.contentElement['length'] !== undefined) {
       return;
@@ -47,17 +51,24 @@ export class ContentElementComponent {
       Type = 'html';
     }
 
+    console.log(Type);
+
     if(!this.contentElement.invisible) {
       
       let componentFactory = this.resolver.resolveComponentFactory(ElementComponents[Type]);
       let componentRef = this.viewContainerRef.createComponent(componentFactory);
 
-      this.host.nativeElement.parentNode.removeChild(this.host.nativeElement);
+      if(this.host.nativeElement.parentNode !== null) {
+        this.host.nativeElement.parentNode.removeChild(this.host.nativeElement);
+      }
 
       if(Type === 'html') {
+        if(this.contentElement.parsedContent === undefined) {
+          return;
+        }
         componentRef.location.nativeElement.innerHTML = this.contentElement.parsedContent.trim();
         
-      //   // componentRef.location.nativeElement.parentNode.replaceChild(componentRef.location.nativeElement.firstChild, componentRef.location.nativeElement);
+        componentRef.location.nativeElement.parentNode.replaceChild(componentRef.location.nativeElement.firstChild, componentRef.location.nativeElement);
         return;
       }
       (<{data: ContentElement}>componentRef.instance).data = this.contentElement;
