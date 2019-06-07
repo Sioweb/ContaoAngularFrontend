@@ -8,7 +8,7 @@ Konsole im Root von Contao öffnen: `git clone https://github.com/Sioweb/ContaoA
 
 ## FE_PAGE
 
-Ein Template `fe_angular.html5` anlegen und folgendes hinterlegen:
+Ein Template `fe_angular.html5` anlegen und folgendes hinterlegen und im Seitenlayout aktivieren:
 
 ```php
 <!doctype html>
